@@ -1,0 +1,27 @@
+﻿body {
+    background: linear-gradient(to bottom, #ffffff, #dbe8ff, #2563eb);
+    min-height: 100vh;
+    background-attachment: fixed;
+}
+
+.swagger-ui .topbar {
+    background-color: #111827;
+}
+
+.swagger-ui .scheme-container {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 10px;
+}
+
+.swagger-ui .opblock {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.swagger-ui .btn.execute {
+    background: #2563eb;
+    border-radius: 8px;
+}

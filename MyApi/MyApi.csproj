@@ -10,7 +10,12 @@
     <Compile Remove="Controllers\WeatherForecastController.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="TextFile.txt" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties requests_1json__JsonSchema="[" /></VisualStudio></ProjectExtensions>
 </Project>
