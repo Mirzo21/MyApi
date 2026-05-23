@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\WeatherForecastController.cs" />
+    <Compile Remove="Models\User.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 
@@ -17,5 +18,5 @@
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
-  <ProjectExtensions><VisualStudio><UserProperties requests_1json__JsonSchema="[" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
 </Project>

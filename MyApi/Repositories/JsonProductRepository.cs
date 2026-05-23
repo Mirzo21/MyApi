@@ -3,7 +3,7 @@ using MyApi.Models;
 
 namespace MyApi.Repositories
 {
-    public class JsonRequestRepository : IRequestRepository
+    public class JsonProductRepository : IProductRepository
     {
         private readonly string _filePath = "products.json";
 

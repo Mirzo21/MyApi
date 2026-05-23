@@ -129,9 +129,9 @@
     </table>
 
     <script>
+        let editRow = null;
 
         function addProduct() {
-
             let name = document.getElementById("name").value;
             let quantity = document.getElementById("quantity").value;
             let price = document.getElementById("price").value;
@@ -141,18 +141,28 @@
                 return;
             }
 
-            let table = document.getElementById("productTable");
+            // Если редактируем строку
+            if (editRow !== null) {
+                editRow.cells[0].innerText = name;
+                editRow.cells[1].innerText = quantity;
+                editRow.cells[2].innerText = price;
 
-            let row = table.insertRow();
+                editRow = null;
+                document.querySelector("button").innerText = "Добавить";
+            } else {
+                let table = document.getElementById("productTable");
+                let row = table.insertRow();
 
-            row.insertCell(0).innerText = name;
-            row.insertCell(1).innerText = quantity;
-            row.insertCell(2).innerText = price;
+                row.insertCell(0).innerText = name;
+                row.insertCell(1).innerText = quantity;
+                row.insertCell(2).innerText = price;
 
-            let actionCell = row.insertCell(3);
-
-            actionCell.innerHTML =
-                '<button class="delete-btn" onclick="deleteRow(this)">Удалить</button>';
+                let actionCell = row.insertCell(3);
+                actionCell.innerHTML = `
+                    <button onclick="editProduct(this)">Изменить</button>
+                    <button class="delete-btn" onclick="deleteRow(this)">Удалить</button>
+                `;
+            }
 
             document.getElementById("name").value = "";
             document.getElementById("quantity").value = "";
@@ -163,7 +173,18 @@
             button.parentElement.parentElement.remove();
         }
 
+        function editProduct(button) {
+            let row = button.parentElement.parentElement;
+
+            document.getElementById("name").value = row.cells[0].innerText;
+            document.getElementById("quantity").value = row.cells[1].innerText;
+            document.getElementById("price").value = row.cells[2].innerText;
+
+            editRow = row;
+            document.querySelector("button").innerText = "Сохранить";
+        }
     </script>
+
 
 </body>
 </html>

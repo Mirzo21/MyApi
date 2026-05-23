@@ -24,7 +24,7 @@ builder.Services.AddCors(options =>
 // =================
 
 // ===== Repository =====
-builder.Services.AddSingleton<IRequestRepository, JsonRequestRepository>();
+builder.Services.AddSingleton<IProductRepository, JsonProductRepository>();
 // ======================
 
 var app = builder.Build();

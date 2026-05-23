@@ -1,6 +1,6 @@
 ﻿namespace MyApi.Models
 {
-    public enum RequestStatus
+    public enum ProductStatus
     {
         New,
         InProgress,

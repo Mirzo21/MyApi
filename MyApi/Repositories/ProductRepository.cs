@@ -1,6 +1,6 @@
 ﻿using MyApi.Models;
 
-public interface IRequestRepository
+public interface IProductRepository
 {
     List<Product> GetAll();
 
