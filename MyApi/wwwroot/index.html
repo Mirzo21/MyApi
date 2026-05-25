@@ -129,9 +129,43 @@
     </table>
 
     <script>
-        let editRow = null;
 
-        function addProduct() {
+        let editId = null;
+
+        async function loadProducts() {
+
+            const response = await fetch('/api/Products');
+
+            const products = await response.json();
+
+            let table = document.getElementById("productTable");
+
+            table.innerHTML = "";
+
+            products.forEach(product => {
+
+                let row = table.insertRow();
+
+                row.insertCell(0).innerText = product.name;
+                row.insertCell(1).innerText = product.quantity;
+                row.insertCell(2).innerText = product.price;
+
+                let actionCell = row.insertCell(3);
+
+                actionCell.innerHTML = `
+                            <button onclick="editProduct('${product.id}', '${product.name}', '${product.quantity}', '${product.price}')">
+                                Изменить
+                            </button>
+
+                            <button class="delete-btn" onclick="deleteProduct('${product.id}')">
+                                Удалить
+                            </button>
+                        `;
+            });
+        }
+
+        async function addProduct() {
+
             let name = document.getElementById("name").value;
             let quantity = document.getElementById("quantity").value;
             let price = document.getElementById("price").value;
@@ -141,50 +175,68 @@
                 return;
             }
 
-            // Если редактируем строку
-            if (editRow !== null) {
-                editRow.cells[0].innerText = name;
-                editRow.cells[1].innerText = quantity;
-                editRow.cells[2].innerText = price;
+            let product = {
+                name: name,
+                quantity: parseInt(quantity),
+                price: parseFloat(price),
+                category: "Техника"
+            };
 
-                editRow = null;
-                document.querySelector("button").innerText = "Добавить";
+            if (editId === null) {
+
+                await fetch('/api/Products', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(product)
+                });
+
             } else {
-                let table = document.getElementById("productTable");
-                let row = table.insertRow();
 
-                row.insertCell(0).innerText = name;
-                row.insertCell(1).innerText = quantity;
-                row.insertCell(2).innerText = price;
+                await fetch(`/api/Products/${editId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(product)
+                });
 
-                let actionCell = row.insertCell(3);
-                actionCell.innerHTML = `
-                    <button onclick="editProduct(this)">Изменить</button>
-                    <button class="delete-btn" onclick="deleteRow(this)">Удалить</button>
-                `;
+                editId = null;
+
+                document.querySelector("button").innerText = "Добавить";
             }
 
             document.getElementById("name").value = "";
             document.getElementById("quantity").value = "";
             document.getElementById("price").value = "";
+
+            loadProducts();
         }
 
-        function deleteRow(button) {
-            button.parentElement.parentElement.remove();
+        async function deleteProduct(id) {
+
+            await fetch(`/api/Products/${id}`, {
+                method: 'DELETE'
+            });
+
+            loadProducts();
         }
 
-        function editProduct(button) {
-            let row = button.parentElement.parentElement;
+        function editProduct(id, name, quantity, price) {
 
-            document.getElementById("name").value = row.cells[0].innerText;
-            document.getElementById("quantity").value = row.cells[1].innerText;
-            document.getElementById("price").value = row.cells[2].innerText;
+            document.getElementById("name").value = name;
+            document.getElementById("quantity").value = quantity;
+            document.getElementById("price").value = price;
 
-            editRow = row;
+            editId = id;
+
             document.querySelector("button").innerText = "Сохранить";
         }
-    </script>
 
+        loadProducts();
+
+    </script>
 
 </body>
 </html>
